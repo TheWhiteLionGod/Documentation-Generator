@@ -1,4 +1,4 @@
-from DocumentationGenerator import parser, datatypes
+from DocumentationGenerator import parser, datatypes, generator
 import argparse
 import ast
 
@@ -10,10 +10,11 @@ def main():
 
     directory: str = args.dir
     files: dict[ast.Module] = parser.parseDirectory(directory)
-    for filename, tree in files.items():
-        functions: list[datatypes.Function] = parser.parseFunctionsFromTree(tree)
-        for f in functions:
-            print(filename, f.name)
+    with open("result.txt", "w") as f:
+        for filename, tree in files.items():
+            functions: list[datatypes.Function] = parser.parseFunctionsFromTree(tree)
+            result = generator.generateFromFile(filename, functions)
+            f.write(f"{result}\n")
 
 
 if __name__ == "__main__":

@@ -14,10 +14,13 @@ def test_parseFromFile():
 
 def test_parseDirectory():
     directory: str = "src/test"
-    expected_output: list[str] = ["test_parser.py", "simple.py"]  # Answers are Hardcoded
+    expected_output: list[str] = ["test_generator.py", "test_parser.py", "simple.py"]  # Answers are Hardcoded
+    expected_output.sort()
 
     result: dict[str, ast.Module] = parser.parseDirectory(directory)
     result: list[str] = list(result.keys())
+    result.sort()
+
     assert result == expected_output
 
 
@@ -31,5 +34,5 @@ def test_parseFunctionsFromTree():
     assert len(result) == 1  # One Function
     assert result[0].name == "loadFromJson"
     assert result[0].docstring == "THIS IS A TEST DOC STRING IN SIMPLE.PY"
-    assert result[0].args.args[0].arg == 'filename'
-    assert result[0].result.id == 'dict'
+    assert result[0].args == "filename: str, one: int = 1, *args, isBool: bool, isEmpty: str = 'False', **kwargs"
+    assert result[0].result == 'dict'

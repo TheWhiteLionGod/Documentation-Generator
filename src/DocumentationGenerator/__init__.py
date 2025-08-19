@@ -1,2 +1,3 @@
 import DocumentationGenerator.parser as parser
 import DocumentationGenerator.datatypes as datatypes
+import DocumentationGenerator.generator as generator

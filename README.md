@@ -1,4 +1,4 @@
-# DocumentationGenerator
+# Documentation Generator
 This python module will take in your source directory, read through your python files, and generate documentation for it.
 
 ## Installation

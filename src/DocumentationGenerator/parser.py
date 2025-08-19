@@ -1,4 +1,4 @@
-from . import datatypes
+from DocumentationGenerator import datatypes
 import ast
 import os
 
