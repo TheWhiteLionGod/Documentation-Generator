@@ -1,11 +1,15 @@
 # DocumentationGenerator
-[text]
+This python module will take in your source directory, read through your python files, and generate documentation for it.
 
 ## Installation
-[text]
+```bash
+pip install .
+```
 
 ## Usage
-[text]
+```bash
+python3 -m DocumentationGenerator {YOUR SOURCE DIRECTORY}
+```
 
 ## Contributing
 

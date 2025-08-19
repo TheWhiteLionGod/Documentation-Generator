@@ -11,7 +11,7 @@ def main():
     directory: str = args.dir
     files: dict[ast.Module] = parser.parseDirectory(directory)
     for filename, tree in files.items():
-        functions = parser.parseFunctionsFromTree(tree)
+        functions: list[datatypes.Function] = parser.parseFunctionsFromTree(tree)
         for f in functions:
             print(filename, f.name)
 
