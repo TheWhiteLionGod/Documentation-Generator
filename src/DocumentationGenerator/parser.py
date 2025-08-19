@@ -18,7 +18,7 @@ def parseDirectory(directory: str) -> dict[str, ast.Module]:
                 continue
 
             data.update({
-                filename: parseFromFile(os.path.join(root, filename))
+                os.path.join(root, filename): parseFromFile(os.path.join(root, filename))
             })
 
     return data
