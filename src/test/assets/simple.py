@@ -1,5 +1,6 @@
 import json
 
+
 def loadFromJson(filename: str) -> dict:
     """
     THIS IS A TEST DOC STRING IN SIMPLE.PY

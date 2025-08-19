@@ -1,2 +1,2 @@
 import DocumentationGenerator.parser as parser
-
+import DocumentationGenerator.datatypes as datatypes
