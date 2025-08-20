@@ -1,3 +1,4 @@
+from DocumentationGenerator import html
 import ast
 
 
@@ -5,10 +6,10 @@ class Function:
     def __init__(self, name: str, docstring: str, arg_struct, result):
         self.name: str = name
         self.docstring: str = docstring
-        self.result: str | None = None
-        if result:
-            if isinstance(result, ast.Name):
-                self.result = result.id
+        
+        self.result: str = "None"
+        if isinstance(result, ast.Name):
+            self.result = result.id
 
         # Creating Argument Structure
         args: list[list[str | None]] = []
@@ -16,30 +17,30 @@ class Function:
         for arg in arg_struct.args:
             param_type: str = 'any'
             if isinstance(arg.annotation, ast.Name):
-                param_type = f"<span class='text-success'>{arg.annotation.id.strip()}</span>"
-            args.append([f"<span class='text-primary'>{arg.arg}</span>", param_type, None])
+                param_type = html.setTextColor(arg.annotation.id.strip(), 'text-success')
+            args.append([html.setTextColor(arg.arg, 'text-primary'), param_type, None])
 
         # Positional Arguments with Default Value
         for i, default in enumerate(arg_struct.defaults):
             index = len(arg_struct.args) - len(arg_struct.defaults) + i
-            args[index][2] = f"<span class='text-success'>{ast.unparse(default).strip()}<span>"
+            args[index][2] = html.setTextColor(ast.unparse(default).strip(), 'text-success')
 
         # Variable Positional Arguments
         if arg_struct.vararg:
-            args.append(["<span class='text-primary'>*args</span>", "any", None])
+            args.append([html.setTextColor("*args", "text-primary"), "any", None])
 
         # Key Word Only Arguments + Potential Default
         for i, kwarg in enumerate(arg_struct.kwonlyargs):
-            param_type: str = f"<span class='text-success'>{kwarg.annotation.id.strip() if kwarg.annotation else 'any'}</span>"
+            param_type: str = html.setTextColor(kwarg.annotation.id.strip(), 'text-success') if kwarg.annotation else 'any'
             default = None
             if arg_struct.kw_defaults[i]:
-                default = f"<span class='text-primary'>{ast.unparse(arg_struct.kw_defaults[i]).strip()}</span>"
+                default =  html.setTextColor(ast.unparse(arg_struct.kw_defaults[i].strip(), 'text-primary'))
 
-            args.append([f"<span class='text-primary'>{kwarg.arg}</span>", param_type, default])
+            args.append([html.setTextColor(kwarg.arg, 'text-primary'), param_type, default])
 
         # Variable Key Word Arguments
         if arg_struct.kwarg:
-            args.append(["<span class='text-primary'>**kwargs</span>", "any", None])
+            args.append([html.setTextColor("**kwargs", 'text-primary'), "any", None])
 
         string_arg = ""
         for arg in args:

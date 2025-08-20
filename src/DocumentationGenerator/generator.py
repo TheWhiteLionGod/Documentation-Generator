@@ -1,32 +1,11 @@
-from DocumentationGenerator import datatypes
+from DocumentationGenerator import datatypes, html
 
 
-def generateFromFile(filename: str, functions: list[datatypes.Function]) -> str:
-    if not functions:
-        return ""
-
-    buffer = f"{filename}:\n"
-    for f in functions:
-        buffer += f"def {f.name}({f.args}) -> {f.result}:\n"
-        buffer += f"    \"\"\"{f.docstring}\"\"\"\n" if f.docstring else ""
-        buffer += "    ...\n"
-    return buffer
-
-
-def generateFunction(function: datatypes.Function) -> str:
-    buffer  = f"<span class='text-primary'>def</span> <span class='text-warning'>{function.name}(</span>{function.args}<span class='text-warning'>)</span> -> <span class='text-success'>{function.result}</span>:\n"
-    buffer += f"{createLineBreak()}    \"\"\"{function.docstring}\"\"\"\n" if function.docstring else ""
-    buffer += "    ...\n"
-    return buffer
-
-
-def createHeader(string: str) -> str:
-    return f"<h4>{string}</h4>"
-
-
-def createParagraph(string: str) -> str:
-    return f"<p class='mt-1'>{string}</p>"
-
-
-def createLineBreak() -> str:
-    return "<br>"
+def generateHTMLForFunction(function: datatypes.Function) -> str:
+    return  f"{html.setTextColor('def', 'text-primary')} " + \
+            f"{html.setTextColor(function.name + "(", 'text-warning')}" + \
+            f"{function.args}" + \
+            f"{html.setTextColor(")", "text-warning")}" + \
+             " -> " + \
+            f"{html.setTextColor(function.result, "text-success")}" + \
+            f"{html.createLineBreak()}\"\"\"{function.docstring}\"\"\"" if function.docstring else " ..."
