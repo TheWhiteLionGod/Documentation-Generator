@@ -6,7 +6,7 @@ class Function:
     def __init__(self, name: str, docstring: str, arg_struct, result):
         self.name: str = name
         self.docstring: str = docstring
-        
+
         self.result: str = "None"
         if isinstance(result, ast.Name):
             self.result = result.id
@@ -43,22 +43,21 @@ class Function:
         self.args: list[str] = args
         self.args_html = self.createHtmlForArgs()
 
-    
     def createHtmlForArgs(self) -> str:
         result = HtmlBuilder(False)
         for i, (arg_name, type, default) in enumerate(self.args):
             result = result.createSpan("text-primary", contents=arg_name)
-            
+
             if type != "any":
                 result = result \
                     .createSpan(contents=": ") \
                     .createSpan("text-success", contents=type)
-                
+
             if default is not None:
                 result = result \
                     .createSpan(contents=" = ") \
                     .createSpan("text-primary", contents=default)
-                
+
             if (len(self.args) != i + 1):
                 result = result.createSpan(contents=", ")
         return result.build()

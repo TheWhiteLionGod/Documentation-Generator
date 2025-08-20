@@ -14,7 +14,7 @@ def test_parseFromFile():
 
 def test_parseDirectory():
     directory: str = "src/test"
-    expected_output: list[str] = ["test_generator.py", "test_parser.py", "simple.py"]  # Answers are Hardcoded
+    expected_output: list[str] = ["src/test/test_html_builder.py", "src/test/test_generator.py", "src/test/test_parser.py", "src/test/assets/simple.py"]  # Answers are Hardcoded
     expected_output.sort()
 
     result: dict[str, ast.Module] = parser.parseDirectory(directory)
@@ -30,9 +30,15 @@ def test_parseFunctionsFromTree():
         tree: ast.Module = ast.parse(f.read())
 
     result: list[datatypes.Function] = parser.parseFunctionsFromTree(tree)
+    print(result[0].name, result[0].docstring, result[0].args, result[0].result)
 
     assert len(result) == 1  # One Function
     assert result[0].name == "loadFromJson"
     assert result[0].docstring == "THIS IS A TEST DOC STRING IN SIMPLE.PY"
-    assert result[0].args == "filename: str, one: int = 1, *args, isBool: bool, isEmpty: str = 'False', **kwargs"
+    assert result[0].args == [["filename", "str", None],
+                              ["one", "int", "1"],
+                              ["*args", "any", None],
+                              ["isBool", "bool", None],
+                              ["isEmpty", "str", "'False'"],
+                              ["**kwargs", "any", None]]
     assert result[0].result == 'dict'
