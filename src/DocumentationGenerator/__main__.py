@@ -1,4 +1,5 @@
-from DocumentationGenerator import parser, datatypes, generator, html
+from DocumentationGenerator import parser, datatypes, generator
+from DocumentationGenerator.html_builder import HtmlBuilder
 import argparse
 import ast
 
@@ -11,24 +12,23 @@ def main():
     directory: str = args.dir
     files: dict[ast.Module] = parser.parseDirectory(directory)
     
+    html = HtmlBuilder()
     for filename, tree in files.items():
         functions: list[datatypes.Function] = parser.parseFunctionsFromTree(tree)
         if not functions:
-            continue
+            continue 
         
-        html.createDiv(
-            "row",
-            "my-4",
-            contents=""
-        )
-        f.write(generator.createHeader(f"{filename}:"))
-        f.write("<div class='px-5 bg-body-secondary rounded'>")
+        function_html = HtmlBuilder(False)
         for function in functions:
-            result = generator.generateFunction(function)
-            f.write(generator.createParagraph(result))
-        f.write("</div></div>")
-    f.write("</body><html>")
+            function_html.createParagraph(contents=generator.generateHTMLForFunction(function))
+ 
+        html = html.createDiv("row", " my-4", contents=HtmlBuilder(False)
+                        .createH4(contents=filename + ":")
+                        .createDiv("px-5", "bg-body-secondary", "rounded", contents=function_html)
+                    )
 
+    with open('test.html', "w") as f:
+        f.write(html.build())
 
 if __name__ == "__main__":
     main()
