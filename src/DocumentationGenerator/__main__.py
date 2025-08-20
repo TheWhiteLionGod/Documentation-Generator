@@ -2,6 +2,7 @@ from DocumentationGenerator import parser, datatypes, generator
 from DocumentationGenerator.html_builder import HtmlBuilder
 import argparse
 import ast
+import os
 
 
 def main():
@@ -10,10 +11,11 @@ def main():
     args = arg_parser.parse_args()
 
     directory: str = args.dir
+    os.makedirs(os.path.join(directory, "docs"), exist_ok=True)
     files: dict[ast.Module] = parser.parseDirectory(directory)
 
-    html = HtmlBuilder()
     for filename, tree in files.items():
+        html = HtmlBuilder()
         functions: list[datatypes.Function] = parser.parseFunctionsFromTree(tree)
         if not functions:
             continue
@@ -27,8 +29,10 @@ def main():
                               .createDiv("px-5", "bg-body-secondary", "rounded", contents=function_html)
                               )
 
-    with open('test.html', "w") as f:
-        f.write(html.build())
+        location: str = os.path.join('src/docs', "/".join(filename.split("/")[1:-1]))  # Getting only directory from filename
+        os.makedirs(location, exist_ok=True)
+        with open(location + "/" + filename.split("/")[-1] + ".html", "w") as f:
+            f.write(html.build())
 
 
 if __name__ == "__main__":
