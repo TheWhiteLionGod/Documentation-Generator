@@ -12,10 +12,10 @@ def main():
 
     with open('pyproject.toml', 'rb') as f:
         data: dict[str, any] = tomllib.load(f)
-    
+
     if data.get('project') is None:
         data = {'project': {'name': "{PROJECT NAME}", "version": "1.0.0"}}
-    
+
     html = HtmlBuilder() \
         .createH4("mt-4", contents=data['project']["name"]) \
         .createParagraph(contents="v" + data["project"]["version"])
@@ -43,7 +43,7 @@ def main():
 
         html = HtmlBuilder() \
             .createH4("mt-4", contents=filename + ":") \
-            .createParagraph("mt-4", contents=f"\"\"\"{file_docstring}\"\"\"")
+            .createParagraph("mt-4", contents=file_docstring)
 
         classes: list[datatypes.Class] = parser.parseClassesFromTree(tree)
         functions: list[datatypes.Function] = parser.parseFunctionsFromTree(tree)
