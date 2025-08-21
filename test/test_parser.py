@@ -30,9 +30,8 @@ def test_parseFunctionsFromTree():
         tree: ast.Module = ast.parse(f.read())
 
     result: list[datatypes.Function] = parser.parseFunctionsFromTree(tree)
-    print(result[0].name, result[0].docstring, result[0].args, result[0].result)
 
-    assert len(result) == 1  # One Function
+    assert len(result) == 4  # One Function
     assert result[0].name == "loadFromJson"
     assert result[0].docstring == "THIS IS A TEST DOC STRING IN SIMPLE.PY"
     assert result[0].args == [["filename", "str", None],
@@ -42,3 +41,10 @@ def test_parseFunctionsFromTree():
                               ["isEmpty", "str", "'False'"],
                               ["**kwargs", "any", None]]
     assert result[0].result == 'dict'
+
+
+def test_parseDocstringFromModule():
+    filename = 'test/assets/simple.py'
+    tree: ast.Module = parser.parseFromFile(filename)
+    result = parser.parseDocstringFromModule(tree)
+    assert result == "TEST MODULE DOCSTRING"

@@ -15,7 +15,7 @@ def main():
 
     html = HtmlBuilder() \
         .createH4("mt-4", contents=data['project']["name"]) \
-        .createParagraph(contents="v"+data["project"]["version"])
+        .createParagraph(contents="v" + data["project"]["version"])
 
     table_of_contents_html = HtmlBuilder(False)
     for filename, tree in files.items():
@@ -24,16 +24,16 @@ def main():
             continue
 
         table_of_contents_html.createDiv("py-2", contents=HtmlBuilder(False)
-                                         .createLink("mx-4", contents=filename.split("/")[-1], link=filename.replace("src/", "") + ".html") \
+                                         .createLink("mx-4", contents=filename.split("/")[-1], link=filename.replace("src/", "") + ".html")
                                          .createLinebreak()
                                          )
-    
+
     with open('docs/index.html', 'w') as f:
         f.write(html.createDiv("my-4", "bg-body-secondary", "rounded", contents=table_of_contents_html).build())
 
     for filename, tree in files.items():
         file_docstring: str | None = parser.parseDocstringFromModule(tree)
-        
+
         # Checking if file is "private"
         if file_docstring is None:
             continue
@@ -41,7 +41,7 @@ def main():
         html = HtmlBuilder() \
             .createH4("mt-4", contents=filename + ":") \
             .createParagraph("mt-4", contents=f"\"\"\"{file_docstring}\"\"\"")
-        
+
         classes: list[datatypes.Class] = parser.parseClassesFromTree(tree)
         functions: list[datatypes.Function] = parser.parseFunctionsFromTree(tree)
 
@@ -55,9 +55,9 @@ def main():
                 continue
 
             class_html.createDiv("my-4", contents=generator.generateHTMLForClass(cls))
-        
+
         html = html.createDiv("row", "my-4", "px-5", "bg-body-secondary", "rounded", contents=class_html)
-        
+
         function_html = HtmlBuilder(False)
         for function in functions:
             # Functions without Docstrings are Considered Private

@@ -24,13 +24,13 @@ def generateHTMLForClass(cls: datatypes.Class) -> str:
     html = html_builder.HtmlBuilder(False) \
         .createSpan('text-primary', contents="class") \
         .createSpan('text-success', contents=cls.name)
-    
+
     if cls.parents:
         html = html.createSpan("text-warning", contents="(")
 
         for i, parent in enumerate(cls.parents):
             html = html.createSpan("text-success", contents=parent)
-            
+
             if len(cls.parents) != i + 1:
                 html = html.createSpan(contents=", ")
 
@@ -40,19 +40,19 @@ def generateHTMLForClass(cls: datatypes.Class) -> str:
         .createSpan(contents=": ") \
         .createLinebreak() \
         .createSpan(contents=f"\"\"\"{cls.docstring}\"\"\"")
-    
+
     if not cls.functions:
         html = html \
             .createLinebreak() \
-            .createSpan("...")
+            .createSpan(contents="...")
     else:
         functions_html = html_builder.HtmlBuilder(False)
         for function in cls.functions:
             if function.docstring is None:
                 continue
-            
+
             functions_html = functions_html.createParagraph("my-2", contents=generateHTMLForFunction(function))
-        
+
         html.createDiv("mx-4", contents=functions_html)
 
     return html.build()

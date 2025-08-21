@@ -50,7 +50,7 @@ class HtmlBuilder:
         """Creates a Span Tag"""
         self.html.insert(-1, f"<span class='{' '.join([class_ for class_ in classes])}'>{contents}</span>")
         return self
-    
+
     def createLink(self, *classes, contents: 'str | HtmlBuilder', link: str) -> Self:
         """Creates a A Tag"""
         self.html.insert(-1, f"<a href='{link}' class='{' '.join(class_ for class_ in classes)}'>{contents}</a>")
