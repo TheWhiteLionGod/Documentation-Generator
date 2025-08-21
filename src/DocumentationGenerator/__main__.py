@@ -29,7 +29,7 @@ def main():
                               .createDiv("px-5", "bg-body-secondary", "rounded", contents=function_html)
                               )
 
-        location: str = os.path.join('src/docs', "/".join(filename.split("/")[1:-1]))  # Getting only directory from filename
+        location: str = os.path.join('docs', "/".join(filename.split("/")[1:-1]))  # Getting only directory from filename
         os.makedirs(location, exist_ok=True)
         with open(location + "/" + filename.split("/")[-1] + ".html", "w") as f:
             f.write(html.build())
