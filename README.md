@@ -7,8 +7,23 @@ pip install .
 ```
 
 ## Usage
+**Important**: This project assumes your project structure is the following:
+```markdown
+.
+|-- src
+|   |-- {YOUR PROJECT}
+|       |-- example.py
+|
+|   **File Structure Below Is Auto Generated**
+|-- docs
+|   |-- index.html
+|   |-- {YOUR PROJECT}
+|       |-- example.py.html
+```
+
+**Running Documentation Generator:**
 ```bash
-python3 -m DocumentationGenerator {YOUR SOURCE DIRECTORY}
+python3 -m DocumentationGenerator
 ```
 
 ## Contributing

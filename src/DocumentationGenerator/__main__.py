@@ -1,17 +1,12 @@
 from DocumentationGenerator import parser, datatypes, generator
 from DocumentationGenerator.html_builder import HtmlBuilder
-import argparse
 import ast
 import os
 
 
 def main():
-    arg_parser = argparse.ArgumentParser(description="Generates Documentation for Python Projects")
-    arg_parser.add_argument('dir', metavar="dir", type=str, help='Enter source directory of python files')
-    args = arg_parser.parse_args()
-
-    directory: str = args.dir
-    os.makedirs(os.path.join(directory, "docs"), exist_ok=True)
+    os.makedirs("docs", exist_ok=True)
+    directory: str = "src"
     files: dict[ast.Module] = parser.parseDirectory(directory)
 
     for filename, tree in files.items():
@@ -22,6 +17,10 @@ def main():
 
         function_html = HtmlBuilder(False)
         for function in functions:
+            # Functions without Docstrings are Considered Private
+            if not function.docstring:
+                continue
+
             function_html.createParagraph(contents=generator.generateHTMLForFunction(function))
 
         html = html.createDiv("row", " my-4", contents=HtmlBuilder(False)
