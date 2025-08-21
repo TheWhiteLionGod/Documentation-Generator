@@ -12,12 +12,15 @@ def main():
 
     with open('pyproject.toml', 'rb') as f:
         data: dict[str, any] = tomllib.load(f)
-
+    
+    if data.get('project') is None:
+        data = {'project': {'name': "{PROJECT NAME}", "version": "1.0.0"}}
+    
     html = HtmlBuilder() \
         .createH4("mt-4", contents=data['project']["name"]) \
         .createParagraph(contents="v" + data["project"]["version"])
 
-    table_of_contents_html = HtmlBuilder(False)
+    table_of_contents_html = HtmlBuilder(False).createH4("px-3", "pt-2", contents="Table of Contents")
     for filename, tree in files.items():
         file_docstring: str | None = parser.parseDocstringFromModule(tree)
         if file_docstring is None:
