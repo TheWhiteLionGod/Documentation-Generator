@@ -16,7 +16,10 @@ def main():
         if file_docstring is None:
             continue
 
-        html = HtmlBuilder().createH4("mt-4", contents=filename + ":")
+        html = HtmlBuilder() \
+            .createH4("mt-4", contents=filename + ":") \
+            .createParagraph("mt-4", contents=f"\"\"\"{file_docstring}\"\"\"")
+        
         classes: list[datatypes.Class] = parser.parseClassesFromTree(tree)
         functions: list[datatypes.Function] = parser.parseFunctionsFromTree(tree)
         
