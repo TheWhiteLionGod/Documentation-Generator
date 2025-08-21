@@ -22,7 +22,11 @@ def main():
         
         classes: list[datatypes.Class] = parser.parseClassesFromTree(tree)
         functions: list[datatypes.Function] = parser.parseFunctionsFromTree(tree)
-        
+
+        # Removing Functions that are Class Methods
+        class_methods: list[datatypes.Function] = [function for cls in classes for function in cls.functions]
+        functions: list[datatypes.Function] = [function for function in functions if function not in class_methods]
+
         class_html = HtmlBuilder(False)
         for cls in classes:
             if cls.docstring is None:

@@ -64,6 +64,15 @@ class Function:
             if (len(self.args) != i + 1):
                 result = result.createSpan(contents=", ")
         return result.build()
+    
+    def __eq__(self, other: 'Function') -> bool:
+        if not isinstance(other, Function):
+            raise TypeError(f"Tried to Compare a Function with a {type(other)}")
+        
+        return self.name == other.name \
+            and self.docstring == other.docstring \
+            and self.args_html == self.args_html \
+            and self.result == self.result
 
 
 class Class:
