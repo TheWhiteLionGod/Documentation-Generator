@@ -1,11 +1,14 @@
+"""This Module Defines Classes To Group Parsed Data Together"""
 from DocumentationGenerator.html_builder import HtmlBuilder
 import ast
 
 
 class Function:
-    def __init__(self, name: str, docstring: str, arg_struct, result):
+    """This Class Stores A Functions Name, Docstring, Arguments, and Return Type"""
+    def __init__(self, name: str, docstring: str | None, arg_struct, result):
+        """Init Method"""
         self.name: str = name
-        self.docstring: str = docstring
+        self.docstring: str | None = docstring
 
         self.result: str = "None"
         if isinstance(result, ast.Name):
@@ -64,12 +67,10 @@ class Function:
 
 
 class Class:
-    def __init__(self, name: str, docstring: str):
-        self.name = name
-        self.docstring = docstring
-
-
-class Module:
-    def __init__(self, filename: str, docstring: str):
-        self.filename = filename
-        self.docstring = docstring
+    """This Class Stores A Classes Name, Docstring, Parents(Parent Classes), and Methods"""
+    def __init__(self, name: str, docstring: str | None, parents, functions: list[Function]):
+        """Init Method"""
+        self.name: str = name
+        self.docstring: str | None = docstring
+        self.parents: list[str] = [parent.id for parent in parents if isinstance(parent, ast.Name)]
+        self.functions: list[Function] = functions

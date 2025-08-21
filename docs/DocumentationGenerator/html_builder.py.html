@@ -9,8 +9,227 @@
 <body>
     <div class="container-fluid mx-4" id="root">
 
-<div class='row  my-4'><h4 class=''>src/DocumentationGenerator/html_builder.py:</h4>
-<div class='px-5 bg-body-secondary rounded'></div>
+<h4 class='mt-4'>src/DocumentationGenerator/html_builder.py:</h4>
+<div class='row my-4 px-5 bg-body-secondary rounded'><div class='my-4'><span class='text-primary'>class</span>
+<span class='text-success'>HtmlBuilder</span>
+<span class=''>: </span>
+<br>
+<span class=''>"""This Class Provides Methods to Build HTML"""</span>
+<div class='mx-4'><p class='my-2'><span class='text-primary'>def</span>
+<span class='text-warning'>__init__(</span>
+<span class=''><span class='text-primary'>self</span>
+<span class=''>, </span>
+<span class='text-primary'>generateInitalHtml</span>
+<span class=''>: </span>
+<span class='text-success'>bool</span>
+<span class=''> = </span>
+<span class='text-primary'>True</span>
+</span>
+<span class='text-warning'>)</span>
+<span class=''> -> </span>
+<span class='text-success'>None</span>
+<span class=''><br>
+<span class=''>"""Defines the Builder. Takes in a bool to generate boilerplate html(html, head, and body tags)"""</span>
+</span>
+<span class=''> ...</span>
+</p>
+<p class='my-2'><span class='text-primary'>def</span>
+<span class='text-warning'>createH4(</span>
+<span class=''><span class='text-primary'>self</span>
+<span class=''>, </span>
+<span class='text-primary'>*args</span>
+<span class=''>, </span>
+<span class='text-primary'>contents</span>
+</span>
+<span class='text-warning'>)</span>
+<span class=''> -> </span>
+<span class='text-success'>Self</span>
+<span class=''><br>
+<span class=''>"""Creates a H4 Tag"""</span>
+</span>
+<span class=''> ...</span>
+</p>
+<p class='my-2'><span class='text-primary'>def</span>
+<span class='text-warning'>createParagraph(</span>
+<span class=''><span class='text-primary'>self</span>
+<span class=''>, </span>
+<span class='text-primary'>*args</span>
+<span class=''>, </span>
+<span class='text-primary'>contents</span>
+</span>
+<span class='text-warning'>)</span>
+<span class=''> -> </span>
+<span class='text-success'>Self</span>
+<span class=''><br>
+<span class=''>"""Creates a Paragraph Tag"""</span>
+</span>
+<span class=''> ...</span>
+</p>
+<p class='my-2'><span class='text-primary'>def</span>
+<span class='text-warning'>createLinebreak(</span>
+<span class=''><span class='text-primary'>self</span>
+</span>
+<span class='text-warning'>)</span>
+<span class=''> -> </span>
+<span class='text-success'>Self</span>
+<span class=''><br>
+<span class=''>"""Creates a Br Tag"""</span>
+</span>
+<span class=''> ...</span>
+</p>
+<p class='my-2'><span class='text-primary'>def</span>
+<span class='text-warning'>createDiv(</span>
+<span class=''><span class='text-primary'>self</span>
+<span class=''>, </span>
+<span class='text-primary'>*args</span>
+<span class=''>, </span>
+<span class='text-primary'>contents</span>
+</span>
+<span class='text-warning'>)</span>
+<span class=''> -> </span>
+<span class='text-success'>Self</span>
+<span class=''><br>
+<span class=''>"""Creates a Div Tag"""</span>
+</span>
+<span class=''> ...</span>
+</p>
+<p class='my-2'><span class='text-primary'>def</span>
+<span class='text-warning'>createSpan(</span>
+<span class=''><span class='text-primary'>self</span>
+<span class=''>, </span>
+<span class='text-primary'>*args</span>
+<span class=''>, </span>
+<span class='text-primary'>contents</span>
+</span>
+<span class='text-warning'>)</span>
+<span class=''> -> </span>
+<span class='text-success'>Self</span>
+<span class=''><br>
+<span class=''>"""Creates a Span Tag"""</span>
+</span>
+<span class=''> ...</span>
+</p>
+<p class='my-2'><span class='text-primary'>def</span>
+<span class='text-warning'>build(</span>
+<span class=''><span class='text-primary'>self</span>
+</span>
+<span class='text-warning'>)</span>
+<span class=''> -> </span>
+<span class='text-success'>None</span>
+<span class=''><br>
+<span class=''>"""Returns the built html in the form of a string"""</span>
+</span>
+<span class=''> ...</span>
+</p>
+</div>
+</div>
+</div>
+<div class='row my-4 px-5 bg-body-secondary rounded'><div class='my-4'><span class='text-primary'>def</span>
+<span class='text-warning'>__init__(</span>
+<span class=''><span class='text-primary'>self</span>
+<span class=''>, </span>
+<span class='text-primary'>generateInitalHtml</span>
+<span class=''>: </span>
+<span class='text-success'>bool</span>
+<span class=''> = </span>
+<span class='text-primary'>True</span>
+</span>
+<span class='text-warning'>)</span>
+<span class=''> -> </span>
+<span class='text-success'>None</span>
+<span class=''><br>
+<span class=''>"""Defines the Builder. Takes in a bool to generate boilerplate html(html, head, and body tags)"""</span>
+</span>
+<span class=''> ...</span>
+</div>
+<div class='my-4'><span class='text-primary'>def</span>
+<span class='text-warning'>createH4(</span>
+<span class=''><span class='text-primary'>self</span>
+<span class=''>, </span>
+<span class='text-primary'>*args</span>
+<span class=''>, </span>
+<span class='text-primary'>contents</span>
+</span>
+<span class='text-warning'>)</span>
+<span class=''> -> </span>
+<span class='text-success'>Self</span>
+<span class=''><br>
+<span class=''>"""Creates a H4 Tag"""</span>
+</span>
+<span class=''> ...</span>
+</div>
+<div class='my-4'><span class='text-primary'>def</span>
+<span class='text-warning'>createParagraph(</span>
+<span class=''><span class='text-primary'>self</span>
+<span class=''>, </span>
+<span class='text-primary'>*args</span>
+<span class=''>, </span>
+<span class='text-primary'>contents</span>
+</span>
+<span class='text-warning'>)</span>
+<span class=''> -> </span>
+<span class='text-success'>Self</span>
+<span class=''><br>
+<span class=''>"""Creates a Paragraph Tag"""</span>
+</span>
+<span class=''> ...</span>
+</div>
+<div class='my-4'><span class='text-primary'>def</span>
+<span class='text-warning'>createLinebreak(</span>
+<span class=''><span class='text-primary'>self</span>
+</span>
+<span class='text-warning'>)</span>
+<span class=''> -> </span>
+<span class='text-success'>Self</span>
+<span class=''><br>
+<span class=''>"""Creates a Br Tag"""</span>
+</span>
+<span class=''> ...</span>
+</div>
+<div class='my-4'><span class='text-primary'>def</span>
+<span class='text-warning'>createDiv(</span>
+<span class=''><span class='text-primary'>self</span>
+<span class=''>, </span>
+<span class='text-primary'>*args</span>
+<span class=''>, </span>
+<span class='text-primary'>contents</span>
+</span>
+<span class='text-warning'>)</span>
+<span class=''> -> </span>
+<span class='text-success'>Self</span>
+<span class=''><br>
+<span class=''>"""Creates a Div Tag"""</span>
+</span>
+<span class=''> ...</span>
+</div>
+<div class='my-4'><span class='text-primary'>def</span>
+<span class='text-warning'>createSpan(</span>
+<span class=''><span class='text-primary'>self</span>
+<span class=''>, </span>
+<span class='text-primary'>*args</span>
+<span class=''>, </span>
+<span class='text-primary'>contents</span>
+</span>
+<span class='text-warning'>)</span>
+<span class=''> -> </span>
+<span class='text-success'>Self</span>
+<span class=''><br>
+<span class=''>"""Creates a Span Tag"""</span>
+</span>
+<span class=''> ...</span>
+</div>
+<div class='my-4'><span class='text-primary'>def</span>
+<span class='text-warning'>build(</span>
+<span class=''><span class='text-primary'>self</span>
+</span>
+<span class='text-warning'>)</span>
+<span class=''> -> </span>
+<span class='text-success'>None</span>
+<span class=''><br>
+<span class=''>"""Returns the built html in the form of a string"""</span>
+</span>
+<span class=''> ...</span>
+</div>
 </div>
     </div>
 </body>
