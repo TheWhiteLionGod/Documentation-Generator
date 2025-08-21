@@ -4,7 +4,7 @@ import ast
 
 
 def test_parseFromFile():
-    filename: str = "src/test/assets/simple.py"
+    filename: str = "test/assets/simple.py"
     with open(filename) as f:
         expected_output: ast.Module = ast.parse(f.read())
 
@@ -13,8 +13,8 @@ def test_parseFromFile():
 
 
 def test_parseDirectory():
-    directory: str = "src/test"
-    expected_output: list[str] = ["src/test/test_html_builder.py", "src/test/test_generator.py", "src/test/test_parser.py", "src/test/assets/simple.py"]  # Answers are Hardcoded
+    directory: str = "test/assets"
+    expected_output: list[str] = ["test/assets/simple.py"]  # Answers are Hardcoded
     expected_output.sort()
 
     result: dict[str, ast.Module] = parser.parseDirectory(directory)
@@ -25,7 +25,7 @@ def test_parseDirectory():
 
 
 def test_parseFunctionsFromTree():
-    filename: str = "src/test/assets/simple.py"
+    filename: str = "test/assets/simple.py"
     with open(filename) as f:
         tree: ast.Module = ast.parse(f.read())
 

@@ -3,7 +3,7 @@ import ast
 
 
 def test_generatorHTMLForFunction():
-    filename: str = "src/test/assets/simple.py"
+    filename: str = "test/assets/simple.py"
     tree: ast.Module = parser.parseFromFile(filename)
     functions: datatypes.Function = parser.parseFunctionsFromTree(tree)
     html: str = generator.generateHTMLForFunction(functions[0])
