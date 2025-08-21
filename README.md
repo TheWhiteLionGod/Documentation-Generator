@@ -13,6 +13,7 @@ pip install .
 |-- src
 |   |-- {YOUR PROJECT}
 |       |-- example.py
+|-- pyproject.toml
 |
 |   **File Structure Below Is Auto Generated**
 |-- docs

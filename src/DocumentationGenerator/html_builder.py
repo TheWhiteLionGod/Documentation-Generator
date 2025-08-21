@@ -20,7 +20,7 @@ class HtmlBuilder:
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
 </head>
 <body>
-    <div class="container-fluid mx-4" id="root">
+    <div class="container mx-4" id="root">
 """,
                      """    </div>
 </body>
@@ -49,6 +49,11 @@ class HtmlBuilder:
     def createSpan(self, *classes, contents: 'str | HtmlBuilder') -> Self:
         """Creates a Span Tag"""
         self.html.insert(-1, f"<span class='{' '.join([class_ for class_ in classes])}'>{contents}</span>")
+        return self
+    
+    def createLink(self, *classes, contents: 'str | HtmlBuilder', link: str) -> Self:
+        """Creates a A Tag"""
+        self.html.insert(-1, f"<a href='{link}' class='{' '.join(class_ for class_ in classes)}'>{contents}</a>")
         return self
 
     def build(self):

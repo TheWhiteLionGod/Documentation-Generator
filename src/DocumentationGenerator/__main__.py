@@ -2,12 +2,34 @@ from DocumentationGenerator import parser, datatypes, generator
 from DocumentationGenerator.html_builder import HtmlBuilder
 import ast
 import os
+import tomllib
 
 
 def main():
     os.makedirs("docs", exist_ok=True)
     directory: str = "src"
     files: dict[ast.Module] = parser.parseDirectory(directory)
+
+    with open('pyproject.toml', 'rb') as f:
+        data: dict[str, any] = tomllib.load(f)
+
+    html = HtmlBuilder() \
+        .createH4("mt-4", contents=data['project']["name"]) \
+        .createParagraph(contents="v"+data["project"]["version"])
+
+    table_of_contents_html = HtmlBuilder(False)
+    for filename, tree in files.items():
+        file_docstring: str | None = parser.parseDocstringFromModule(tree)
+        if file_docstring is None:
+            continue
+
+        table_of_contents_html.createDiv("py-2", contents=HtmlBuilder(False)
+                                         .createLink("mx-4", contents=filename.split("/")[-1], link=filename.replace("src/", "") + ".html") \
+                                         .createLinebreak()
+                                         )
+    
+    with open('docs/index.html', 'w') as f:
+        f.write(html.createDiv("my-4", "bg-body-secondary", "rounded", contents=table_of_contents_html).build())
 
     for filename, tree in files.items():
         file_docstring: str | None = parser.parseDocstringFromModule(tree)
