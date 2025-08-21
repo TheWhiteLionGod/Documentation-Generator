@@ -61,3 +61,15 @@ class Function:
             if (len(self.args) != i + 1):
                 result = result.createSpan(contents=", ")
         return result.build()
+
+
+class Class:
+    def __init__(self, name: str, docstring: str):
+        self.name = name
+        self.docstring = docstring
+
+
+class Module:
+    def __init__(self, filename: str, docstring: str):
+        self.filename = filename
+        self.docstring = docstring
