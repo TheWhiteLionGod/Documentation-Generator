@@ -1,5 +1,6 @@
 from DocumentationGenerator import parser, datatypes, generator
 from DocumentationGenerator.html_builder import HtmlBuilder
+from pathlib import Path
 import ast
 import os
 import tomllib
@@ -25,9 +26,12 @@ def main():
         file_docstring: str | None = parser.parseDocstringFromModule(tree)
         if file_docstring is None:
             continue
-
+        
+        parts = list(filename.parts)
+        parts.pop(0)
+        link = Path(*parts).with_suffix(".py.html")
         table_of_contents_html.createDiv("py-2", contents=HtmlBuilder(False)
-                                         .createLink("mx-4", contents=filename.split("/")[-1], link=filename.replace("src/", "") + ".html")
+                                         .createLink("mx-4", contents=filename.name, link=link)
                                          .createLinebreak()
                                          )
 
@@ -42,7 +46,7 @@ def main():
             continue
 
         html = HtmlBuilder() \
-            .createH4("mt-4", contents=filename + ":") \
+            .createH4("mt-4", contents=str(filename) + ":") \
             .createParagraph("mt-4", contents=file_docstring)
 
         classes: list[datatypes.Class] = parser.parseClassesFromTree(tree)
@@ -71,9 +75,11 @@ def main():
 
         html = html.createDiv("row", "my-4", "px-5", "bg-body-secondary", "rounded", contents=function_html)
 
-        location: str = os.path.join('docs', "/".join(filename.split("/")[1:-1]))  # Getting only directory from filename
-        os.makedirs(location, exist_ok=True)
-        with open(location + "/" + filename.split("/")[-1] + ".html", "w") as f:
+        parts = list(filename.parts)
+        parts[0] = 'docs'
+        location = Path(*parts).with_suffix(".py.html")
+        os.makedirs(location.parent, exist_ok=True)
+        with open(location, "w") as f:
             f.write(html.build())
 
 

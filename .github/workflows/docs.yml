@@ -1,3 +1,5 @@
+name: Generate and Host Documentation
+
 on:
     push:
         branches: ["main"]
