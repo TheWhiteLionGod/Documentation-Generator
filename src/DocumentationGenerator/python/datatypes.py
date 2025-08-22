@@ -1,5 +1,5 @@
 """This Module Defines Classes To Group Parsed Data Together"""
-from DocumentationGenerator.html_builder import HtmlBuilder
+from ..html_builder import HtmlBuilder
 import ast
 
 

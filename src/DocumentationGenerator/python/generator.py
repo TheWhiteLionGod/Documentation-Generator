@@ -1,5 +1,6 @@
 """This Module Provides Functions to Generate HTML For Functions and Classes"""
-from DocumentationGenerator import datatypes, html_builder
+from . import datatypes
+from .. import html_builder
 
 
 def generateHTMLForFunction(function: datatypes.Function) -> str:

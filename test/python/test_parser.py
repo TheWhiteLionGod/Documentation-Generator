@@ -5,7 +5,7 @@ import ast
 
 
 def test_parseFromFile():
-    filename: str = Path("test/assets/simple.py")
+    filename: str = Path("test/python/assets/simple.py")
     with open(filename) as f:
         expected_output: ast.Module = ast.parse(f.read())
 
@@ -14,8 +14,8 @@ def test_parseFromFile():
 
 
 def test_parseDirectory():
-    directory: str = Path("test/assets")
-    expected_output: list[str] = [Path("test/assets/simple.py")]  # Answers are Hardcoded
+    directory: str = Path("test/python/assets")
+    expected_output: list[str] = [Path("test/python/assets/simple.py")]  # Answers are Hardcoded
     expected_output.sort()
 
     result: dict[str, ast.Module] = parser.parseDirectory(directory)
@@ -26,7 +26,7 @@ def test_parseDirectory():
 
 
 def test_parseFunctionsFromTree():
-    filename: str = Path("test/assets/simple.py")
+    filename: str = Path("test/python/assets/simple.py")
     with open(filename) as f:
         tree: ast.Module = ast.parse(f.read())
 
@@ -45,7 +45,7 @@ def test_parseFunctionsFromTree():
 
 
 def test_parseDocstringFromModule():
-    filename = Path('test/assets/simple.py')
+    filename = Path('test/python/assets/simple.py')
     tree: ast.Module = parser.parseFromFile(filename)
     result = parser.parseDocstringFromModule(tree)
     assert result == "TEST MODULE DOCSTRING"

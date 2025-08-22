@@ -4,7 +4,7 @@ import pytest
 
 
 def test_EqualTo():
-    filename: str = Path("test/assets/simple.py")
+    filename: str = Path("test/python/assets/simple.py")
     tree: str = parser.parseFromFile(filename)
 
     functions: list[datatypes.Function] = parser.parseFunctionsFromTree(tree)

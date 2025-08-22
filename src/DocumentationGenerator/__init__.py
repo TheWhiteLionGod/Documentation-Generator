@@ -1,3 +1,2 @@
-import DocumentationGenerator.parser as parser
-import DocumentationGenerator.datatypes as datatypes
-import DocumentationGenerator.generator as generator
+from .python import *
+from . import html_builder
