@@ -34,7 +34,7 @@ def main():
         file_docstring: str | None = parser.parseDocstringFromModule(tree)
         if file_docstring is None:
             continue
-        
+
         parts = list(filename.parts)
         parts.pop(0)
         link = Path(*parts).with_suffix(".py.html")

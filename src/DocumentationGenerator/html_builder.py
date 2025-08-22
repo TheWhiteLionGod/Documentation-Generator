@@ -22,7 +22,7 @@ class HtmlBuilder:
 <body>
     <div class="container mx-4" id="root">
 """,
-                     """    </div>
+                      """    </div>
 </body>
 </html>"""]
 

@@ -25,7 +25,7 @@ def sendRequest(endpoint: str, model: str, message: str) -> str:
         result: dict[str] = response.json()
         if result.get('message') and 'content' in result['message']:
             return result['message']['content']
-        
+
         return f"Unexpected Response Format: {result}"
     except requests.exceptions.RequestException as e:
         return f"Request Failed: {e}"
@@ -57,7 +57,7 @@ Rules:
 Here is the AST:
 {module}
 """
-    
+
     return sendRequest(config["AI_HOST"], config["MODEL"], message)
 
 
