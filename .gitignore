@@ -1,9 +1,17 @@
+# Virtual Environment
 env/
+# Python Cache
 .pytest_cache/
 __pycache__/
 *.py[cod]
 *.egg-info
+
+# Setup Script
 setupscript.py
+
+# Pytest
 .coverage
-result.txt
 htmlcov/
+
+# Environment Variables
+.env.secret

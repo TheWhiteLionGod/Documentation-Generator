@@ -1,5 +1,6 @@
 from DocumentationGenerator import parser, datatypes, generator
 from DocumentationGenerator.html_builder import HtmlBuilder
+from dotenv import dotenv_values
 from pathlib import Path
 import ast
 import os
@@ -12,14 +13,21 @@ def main():
     files: dict[ast.Module] = parser.parseDirectory(directory)
 
     with open('pyproject.toml', 'rb') as f:
-        data: dict[str, any] = tomllib.load(f)
+        config: dict[str, any] = tomllib.load(f)
 
-    if data.get('project') is None:
-        data = {'project': {'name': "{PROJECT NAME}", "version": "1.0.0"}}
+    config.update(dotenv_values(".env.secret"))
+
+    # .env.shared is optional
+    if os.path.exists(".env.shared"):
+        config.update(dotenv_values(".env.shared"))
+
+    if config.get('project') is None:
+        # Getting Config Data From .env.shared if couldn't get from pyproject.toml
+        config = {'project': {'name': config.get("PROJECT_NAME"), "version": config.get("PROJECT_VERSION")}}
 
     html = HtmlBuilder() \
-        .createH4("mt-4", contents=data['project']["name"]) \
-        .createParagraph(contents="v" + data["project"]["version"])
+        .createH4("mt-4", contents=config['project']["name"]) \
+        .createParagraph(contents="v" + config["project"]["version"])
 
     table_of_contents_html = HtmlBuilder(False).createH4("px-3", "pt-2", contents="Table of Contents")
     for filename, tree in files.items():
