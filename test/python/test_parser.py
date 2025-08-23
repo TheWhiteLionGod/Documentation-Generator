@@ -1,5 +1,4 @@
-from DocumentationGenerator import parser
-from DocumentationGenerator import datatypes
+from DocumentationGenerator.python import parser, datatypes
 from pathlib import Path
 import ast
 

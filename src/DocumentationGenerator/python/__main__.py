@@ -81,6 +81,3 @@ def main():
         os.makedirs(location.parent, exist_ok=True)
         with open(location, "w") as f:
             f.write(html.build())
-
-
-main()

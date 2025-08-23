@@ -1,4 +1,4 @@
-from DocumentationGenerator import parser, datatypes
+from DocumentationGenerator.python import parser, datatypes
 from pathlib import Path
 import pytest
 
