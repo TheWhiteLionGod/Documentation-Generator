@@ -1,4 +1,5 @@
 """This Module Parses The Java Files"""
+from . import datatypes
 import pathlib
 import jast
 import antlr4
@@ -32,3 +33,28 @@ def parseDirectory(directory: pathlib.Path) -> dict[str, jast.Module]:
 
     return data
 
+
+def jast_walk(node):
+    if isinstance(node, list):
+        for item in node:
+            yield from jast_walk(item)
+        return
+
+    if not hasattr(node, "__dict__"):
+        return
+
+    yield node
+
+    for field_value in vars(node).values():
+        yield from jast_walk(field_value)
+
+
+def parseFunctionFromTree(tree: jast.Module) -> list[datatypes.Function]:
+    """Gets all the Functions from a Module"""
+    result: list[datatypes.Function] = []
+    functions = [f for f in jast_walk(tree) if isinstance(f, jast._jast.Method)]
+
+    for f in functions:
+        function = datatypes.Function(f.modifiers, f.id, f.parameters, f.return_type)
+        result.append(function)
+    return result
