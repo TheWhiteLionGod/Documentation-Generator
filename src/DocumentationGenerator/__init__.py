@@ -5,9 +5,9 @@ def detect_project_type(path="."):
     # Simple heuristic: check for common files
     from pathlib import Path
     path = Path(path)
-    if any(path.glob("*.py")):
+    if any(path.rglob("*.py")):
         return "python"
-    elif any(path.glob("*.java")):
+    elif any(path.rglob("*.java")):
         return "java"
     else:
         raise ValueError("Could not detect project type. No Python or Java files found.")
