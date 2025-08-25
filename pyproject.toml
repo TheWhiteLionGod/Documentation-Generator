@@ -1,3 +1,6 @@
 [project]
 name = "DocumentationGenerator"
 version = "1.0.0"
+dependencies = [
+    "java-ast>=1.0.2"
+]

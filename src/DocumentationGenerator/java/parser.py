@@ -58,3 +58,14 @@ def parseFunctionFromTree(tree: jast.Module) -> list[datatypes.Function]:
         function = datatypes.Function(f.modifiers, f.id, f.parameters, f.return_type)
         result.append(function)
     return result
+
+
+def parseClassesFromTree(tree: jast.Module) -> list[datatypes.Class]:
+    """Gets all the Classes from a Module"""
+    result: list[datatypes.Class] = []
+    classes = [f for f in jast_walk(tree) if isinstance(f, jast._jast.Class)]
+
+    for cls in classes:
+        class_ = datatypes.Class(cls.modifiers, cls.id, cls.extends, cls.implements)
+        result.append(class_)
+    return result
