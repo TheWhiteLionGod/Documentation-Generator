@@ -8,12 +8,12 @@ import jast
 
 def main():
     os.makedirs("docs", exist_ok=True)
-    directory: str = "src"
+    directory: Path = Path("src")
     files: dict[str, jast.Module] = parser.parseDirectory(directory)
-    
+
     # Getting project config from .env.shared
     config: dict[str, str] = dotenv_values(".env.shared")
-    
+
     html = HtmlBuilder() \
         .createH4("mt-4", contents=config["PROJECT_NAME"])\
         .createParagraph(contents="v" + config["PROJECT_VERSION"])
@@ -24,7 +24,7 @@ def main():
         parts.pop(0)
         link = Path(*parts).with_suffix(".java.html")
         table_of_contents_html.createDiv("py-2", contents=HtmlBuilder(False)
-                                         .createLink("mx-4", contents=filename.name, link=link)
+                                         .createLink("mx-4", contents=filename.parts[-2] + "/" + filename.name, link=link)
                                          .createLinebreak()
                                          )
 

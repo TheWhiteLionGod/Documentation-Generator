@@ -13,18 +13,18 @@ def generateHTMLForFunction(function: datatypes.Function) -> str:
         .createSpan('text-primary', contents=' '.join(function.modifiers)) \
         .createSpan('text-success', contents=' '.join(function.result)) \
         .createSpan('text-warning', contents=function.name + "(") \
-    
+
     for i, arg in enumerate(function.args):
-        if len(arg) == 3:
-            html = html.createSpan("text-primary", contents=arg[2])
+        if arg[2]:
+            html = html.createSpan("text-primary", contents=' '.join(arg[2]))
 
         html = html \
             .createSpan("text-success", contents=arg[1]) \
             .createSpan(contents=arg[0])
-        
+
         if len(function.args) != i + 1:
             html = html.createSpan(contents=", ")
-    
+
     return html.createSpan('text-warning', contents=");").build()
 
 
@@ -46,7 +46,7 @@ def generateHTMLForClass(cls: datatypes.Class) -> str:
             html = html.createSpan("text-success", contents=interface)
 
             if len(cls.interfaces) != i + 1:
-                html.createSpan(", ")
+                html.createSpan(contents=", ")
 
     html = html \
         .createSpan(contents="{ ") \
@@ -69,7 +69,6 @@ def generateHTMLForInterface(interface: datatypes.Interface) -> str:
         .createSpan('text-success', contents=interface.name)
 
     if interface.parent != "nonetype":
-        print(interface.parent)
         html = html \
             .createSpan("text-primary", contents="extends") \
             .createSpan("text-success", contents=interface.parent)
@@ -85,5 +84,3 @@ def generateHTMLForInterface(interface: datatypes.Interface) -> str:
 
         html.createDiv("mx-4", contents=functions_html)
     return html.createLinebreak().createSpan(contents="}").build()
-
-

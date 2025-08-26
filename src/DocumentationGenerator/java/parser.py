@@ -6,11 +6,16 @@ import antlr4
 import os
 
 
-def parseFromFile(filename: pathlib.Path) -> jast.Module:
+def parseFromFile(filename: pathlib.Path) -> jast.Module | None:
     """Parses a Single File"""
     with open(filename, 'r') as f:
         data: str = f.read()
-    data: jast.Module = jast.parse(data)
+
+    try:
+        data: jast.Module = jast.parse(data)
+    except antlr4.error.Errors.ParseCancellationException as e:
+        print(f"Failed to parse file: {filename} | Exception: {e}")
+        return None
     return data
 
 
@@ -21,14 +26,11 @@ def parseDirectory(directory: pathlib.Path) -> dict[str, jast.Module]:
         for filename in files:
             if not filename.endswith(".java"):
                 continue
-            
-            try:
-                data.update({
-                    pathlib.Path(root) / pathlib.Path(filename): parseFromFile(pathlib.Path(root) / pathlib.Path(filename))
-                })
-            except antlr4.error.Errors.ParseCancellationException as e:
-                print(f"Failed to parse file: {filename} | Exception: {e}")
-                continue
+
+            data.update(
+                {pathlib.Path(root) / pathlib.Path(filename): parseFromFile(pathlib.Path(root) / pathlib.Path(filename))}
+                if parseFromFile(pathlib.Path(root) / pathlib.Path(filename)) else {}
+            )
 
     return data
 
@@ -67,7 +69,7 @@ def parseInterfacesFromTree(tree: jast.Module) -> list[datatypes.Interface]:
     for i in interfaces:
         functions: list[datatypes.Function] = [
             datatypes.Function(f.modifiers, f.id, f.parameters, f.return_type)
-            for f in i.body 
+            for f in i.body
             if isinstance(f, jast._jast.Method)
         ]
 
@@ -84,10 +86,10 @@ def parseClassesFromTree(tree: jast.Module) -> list[datatypes.Class]:
     for cls in classes:
         functions: list[datatypes.Function] = [
             datatypes.Function(f.modifiers, f.id, f.parameters, f.return_type)
-            for f in cls.body 
+            for f in cls.body
             if isinstance(f, jast._jast.Method)
         ]
-        
+
         interfaces: list[str] = [
             interface.id
             for interface in cls.implements
