@@ -5,7 +5,11 @@ from . import datatypes
 
 def generateHTMLForFunction(function: datatypes.Function) -> str:
     """Takes in A Function and Returns The HTML For It"""
-    html = HtmlBuilder(False) \
+    html = HtmlBuilder(False)
+    for i, annotation in enumerate(function.annotations):
+        html = html.createSpan("text-success", contents="@" + annotation).createLinebreak()
+
+    html = html \
         .createSpan('text-primary', contents=' '.join(function.modifiers)) \
         .createSpan('text-success', contents=' '.join(function.result)) \
         .createSpan('text-warning', contents=function.name + "(") \
@@ -28,14 +32,15 @@ def generateHTMLForClass(cls: datatypes.Class) -> str:
     """Takes in a Class and Generates the HTML for the Class and its Methods"""
     html = HtmlBuilder(False) \
         .createSpan('text-primary', contents=' '.join(cls.modifiers)) \
+        .createSpan('text-primary', contents="class") \
         .createSpan('text-success', contents=cls.name)
 
-    if cls.parent:
+    if cls.parent != "nonetype":
         html = html \
             .createSpan("text-primary", contents="extends") \
             .createSpan("text-success", contents=cls.parent)
 
-    if cls.interfaces:
+    if cls.interfaces and cls.interfaces[0] is not None:
         html = html.createSpan("text-primary", contents="implements")
         for i, interface in enumerate(cls.interfaces):
             html = html.createSpan("text-success", contents=interface)
@@ -60,9 +65,11 @@ def generateHTMLForInterface(interface: datatypes.Interface) -> str:
     """Takes in a Class and Generates the HTML for the Class and its Methods"""
     html = HtmlBuilder(False) \
         .createSpan('text-primary', contents=' '.join(interface.modifiers)) \
+        .createSpan('text-primary', contents="interface") \
         .createSpan('text-success', contents=interface.name)
 
-    if interface.parent:
+    if interface.parent != "nonetype":
+        print(interface.parent)
         html = html \
             .createSpan("text-primary", contents="extends") \
             .createSpan("text-success", contents=interface.parent)
