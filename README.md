@@ -14,12 +14,26 @@ pip install .
 |   |-- {YOUR PROJECT}
 |       |-- example.py
 |-- pyproject.toml
+|-- .env.secret(AI HOST + MODEL)
+|-- .env.shared(OPTIONAL: Used If Unable To Get Project Data from pyproject.toml)
 |
 |   **File Structure Below Is Auto Generated**
 |-- docs
 |   |-- index.html
 |   |-- {YOUR PROJECT}
 |       |-- example.py.html
+```
+
+**Define *.env.secret* file**
+1. Create File
+```bash
+touch .env.secret
+```
+
+2. Define the variables
+```text
+AI_HOST="{URL_ENDPOINT}"
+MODEL="{MODEL: Ex. codegemma:instruct}"
 ```
 
 **Running Documentation Generator:**
