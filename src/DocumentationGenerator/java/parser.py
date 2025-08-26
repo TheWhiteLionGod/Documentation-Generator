@@ -60,12 +60,34 @@ def parseFunctionFromTree(tree: jast.Module) -> list[datatypes.Function]:
     return result
 
 
+def parseInterfacesFromTree(tree: jast.Module) -> list[datatypes.Interface]:
+    """Gets all the Interfaces from a Module"""
+    result: list[datatypes.Interface] = []
+    interfaces = [f for f in jast_walk(tree) if isinstance(f, jast._jast.Interface)]
+
+    for i in interfaces:
+        interface = datatypes.Interface(i.modifiers, i.id, i.extends)
+        result.append(interface)
+    return result
+
+
 def parseClassesFromTree(tree: jast.Module) -> list[datatypes.Class]:
     """Gets all the Classes from a Module"""
     result: list[datatypes.Class] = []
     classes = [f for f in jast_walk(tree) if isinstance(f, jast._jast.Class)]
 
     for cls in classes:
-        class_ = datatypes.Class(cls.modifiers, cls.id, cls.extends, cls.implements)
+        functions: list[datatypes.Function] = [
+            datatypes.Function(f.modifiers, f.id, f.parameters, f.return_type)
+            for f in cls.body 
+            if isinstance(f, jast._jast.Method)
+        ]
+        
+        interfaces: list[str] = [
+            interface.id
+            for interface in cls.implements
+            if isinstance(interface, jast._jast.Coit)
+        ]
+        class_ = datatypes.Class(cls.modifiers, cls.id, cls.extends, interfaces, cls.permits, functions)
         result.append(class_)
     return result

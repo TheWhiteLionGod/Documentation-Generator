@@ -10,9 +10,6 @@ def main():
     
     print("="*50)
     for filename, tree in files.items():
-       # functions: list[datatypes.Function] = parser.parseFunctionFromTree(tree)
-        # for f in functions:
-        #     print(filename, f.name, f.result)
-        classes: list[datatypes.Class] = parser.parseClassesFromTree(tree)
-        for cls in classes:
-            print(filename, cls.name, cls.interfaces)
+        interfaces: list[datatypes.Interface] = parser.parseInterfacesFromTree(tree)
+        for interface in interfaces:
+            print(filename, interface.name, interface.modifiers, interface.parent)

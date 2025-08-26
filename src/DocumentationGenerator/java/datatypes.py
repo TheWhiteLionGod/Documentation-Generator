@@ -28,18 +28,28 @@ class Function:
         
         self.result: str = type(result).__name__.lower() if not isinstance(result, jast._jast.Coit) else result.id + "<>",
  
+class Interface:
+    """This class holds Interface Data"""
+    def __init__(self, modifiers: list[jast._jast.JAST], name: str, parent: jast._jast.jtype):
+       self.name: str = name
+       self.modifiers: list[str] = [type(modifier).__name__.lower() for modifier in modifiers if not isinstance(modifier, jast._jast.Annotation)] 
+
+       self.parent: str = type(parent).__name__.lower() if not isinstance(parent, jast._jast.Coit) else parent.id
+
 class Class:
     """This class holds Class Data"""
-    def __init__(self, modifiers: list[jast._jast.JAST], name: str, parent: jast._jast.jtype, interfaces: list[jast._jast.jtype]):
+    def __init__(self, modifiers: list[jast._jast.JAST], name: str, parent: jast._jast.jtype, interfaces: list[str], permits: list[jast._jast.jtype], functions: list[jast._jast.declaration]):
         """Init Method"""
         self.name: str = name
         self.modifiers: list[str] = [type(modifier).__name__.lower() for modifier in modifiers if not isinstance(modifier, jast._jast.Annotation)]
         
-        self.parent: str = type(parent).__name__.lower() if not isinstance(parent, jast._jast.Coit) else parent.id + "<>",
+        self.parent: str = type(parent).__name__.lower() if not isinstance(parent, jast._jast.Coit) else parent.id
+        self.permits: list[str] = [
+            type(permit).__name__.lower() 
+            if not isinstance(permit, jast._jast.Coit) 
+            else permit.id 
+            for permit in permits
+        ]
 
-        self.interfaces: list[str] = [
-            type(interface).__name__.lower() 
-            if not isinstance(interface, jast._jast.Coit) 
-            else interface.id + "<>"
-            for interface in interfaces]
-        
+        self.interfaces: list[str] = interfaces
+        self.functions: list[Function] = functions
