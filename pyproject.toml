@@ -2,5 +2,6 @@
 name = "DocumentationGenerator"
 version = "1.0.0"
 dependencies = [
+    "java-ast>=1.0.2",
     "python-dotenv>=1.1.1"
 ]

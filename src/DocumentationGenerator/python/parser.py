@@ -1,5 +1,5 @@
 """This Module Parses The Python Files"""
-from DocumentationGenerator import datatypes
+from . import datatypes
 import pathlib
 import ast
 import os

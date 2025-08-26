@@ -1,10 +1,10 @@
-from DocumentationGenerator import parser, generator, datatypes
+from DocumentationGenerator.python import parser, generator, datatypes
 from pathlib import Path
 import ast
 
 
 def test_generateHTMLForFunction():
-    filename: str = Path("test/assets/simple.py")
+    filename: str = Path("test/python/assets/simple.py")
     tree: ast.Module = parser.parseFromFile(filename)
     functions: datatypes.Function = parser.parseFunctionsFromTree(tree)
     html: str = generator.generateHTMLForFunction(functions[0])
@@ -46,7 +46,7 @@ def test_generateHTMLForFunction():
 
 
 def test_generateHTMLForClass1():
-    filename: str = Path("test/assets/simple.py")
+    filename: str = Path("test/python/assets/simple.py")
     tree: ast.Module = parser.parseFromFile(filename)
 
     classes: list[datatypes.Class] = parser.parseClassesFromTree(tree)
@@ -75,7 +75,7 @@ def test_generateHTMLForClass1():
 
 
 def test_generateHTMLForClass2():
-    filename: str = Path("test/assets/simple.py")
+    filename: str = Path("test/python/assets/simple.py")
     tree: ast.Module = parser.parseFromFile(filename)
 
     classes: list[datatypes.Class] = parser.parseClassesFromTree(tree)
@@ -94,7 +94,7 @@ def test_generateHTMLForClass2():
 
 
 def test_generateHTMLForClass3():
-    filename: str = Path("test/assets/simple.py")
+    filename: str = Path("test/python/assets/simple.py")
     tree: ast.Module = parser.parseFromFile(filename)
 
     classes: list[datatypes.Class] = parser.parseClassesFromTree(tree)
@@ -116,7 +116,7 @@ def test_generateHTMLForClass3():
 
 
 def test_generateHTMLForClass4():
-    filename: str = Path("test/assets/simple.py")
+    filename: str = Path("test/python/assets/simple.py")
     tree: ast.Module = parser.parseFromFile(filename)
 
     classes: list[datatypes.Class] = parser.parseClassesFromTree(tree)
@@ -149,7 +149,7 @@ def test_generateHTMLForClass4():
 
 
 def test_generateHTMLForClass5():
-    filename: str = Path("test/assets/simple.py")
+    filename: str = Path("test/python/assets/simple.py")
     tree: ast.Module = parser.parseFromFile(filename)
 
     classes: list[datatypes.Class] = parser.parseClassesFromTree(tree)
