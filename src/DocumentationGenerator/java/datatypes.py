@@ -25,7 +25,7 @@ class Function:
             ]
             for arg in args.parameters
         ]
-        
+
         self.result: str = type(result).__name__.lower() if not isinstance(result, jast._jast.Coit) else result.id + "<>",
  
 class Interface:

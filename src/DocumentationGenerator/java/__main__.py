@@ -1,4 +1,4 @@
-from . import parser, datatypes
+from . import parser, datatypes, generator
 from ..html_builder import HtmlBuilder
 from dotenv import dotenv_values
 from pathlib import Path
@@ -22,7 +22,7 @@ def main():
     for filename in files.keys():
         parts = list(filename.parts)
         parts.pop(0)
-        link = Path(*parts).with_suffix(".py.html")
+        link = Path(*parts).with_suffix(".java.html")
         table_of_contents_html.createDiv("py-2", contents=HtmlBuilder(False)
                                          .createLink("mx-4", contents=filename.name, link=link)
                                          .createLinebreak()
@@ -50,3 +50,10 @@ def main():
             interface_html.createDiv("my-4", contents=generator.generateHTMLForInterface(interface))
 
         html = html.createDiv("row", "my-4", "px-5", "bg-body-secondary", "rounded", contents=interface_html)
+
+        parts = list(filename.parts)
+        parts[0] = 'docs'
+        location = Path(*parts).with_suffix(".java.html")
+        os.makedirs(location.parent, exist_ok=True)
+        with open(location, "w") as f:
+            f.write(html.build())

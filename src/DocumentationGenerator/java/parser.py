@@ -71,7 +71,7 @@ def parseInterfacesFromTree(tree: jast.Module) -> list[datatypes.Interface]:
             if isinstance(f, jast._jast.Method)
         ]
 
-        interface = datatypes.Interface(i.modifiers, i.id, i.extends, function)
+        interface = datatypes.Interface(i.modifiers, i.id, i.extends, functions)
         result.append(interface)
     return result
 
