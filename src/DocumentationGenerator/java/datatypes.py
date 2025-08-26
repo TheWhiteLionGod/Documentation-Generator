@@ -30,11 +30,12 @@ class Function:
  
 class Interface:
     """This class holds Interface Data"""
-    def __init__(self, modifiers: list[jast._jast.JAST], name: str, parent: jast._jast.jtype):
+    def __init__(self, modifiers: list[jast._jast.JAST], name: str, parent: jast._jast.jtype, functions: list[Function]):
        self.name: str = name
        self.modifiers: list[str] = [type(modifier).__name__.lower() for modifier in modifiers if not isinstance(modifier, jast._jast.Annotation)] 
 
        self.parent: str = type(parent).__name__.lower() if not isinstance(parent, jast._jast.Coit) else parent.id
+       self.functions: list[Function] = functions
 
 class Class:
     """This class holds Class Data"""

@@ -19,7 +19,6 @@ def parseDirectory(directory: pathlib.Path) -> dict[str, jast.Module]:
     data: dict[str, jast.Module] = {}
     for root, _, files in os.walk(directory):
         for filename in files:
-            print(filename)
             if not filename.endswith(".java"):
                 continue
             
@@ -66,7 +65,13 @@ def parseInterfacesFromTree(tree: jast.Module) -> list[datatypes.Interface]:
     interfaces = [f for f in jast_walk(tree) if isinstance(f, jast._jast.Interface)]
 
     for i in interfaces:
-        interface = datatypes.Interface(i.modifiers, i.id, i.extends)
+        functions: list[datatypes.Function] = [
+            datatypes.Function(f.modifiers, f.id, f.parameters, f.return_type)
+            for f in i.body 
+            if isinstance(f, jast._jast.Method)
+        ]
+
+        interface = datatypes.Interface(i.modifiers, i.id, i.extends, function)
         result.append(interface)
     return result
 
