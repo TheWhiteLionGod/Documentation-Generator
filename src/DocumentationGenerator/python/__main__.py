@@ -1,6 +1,7 @@
 from . import parser, datatypes, generator
 from ..html_builder import HtmlBuilder
 from pathlib import Path
+from dotenv import dotenv_values
 import ast
 import os
 import tomllib
@@ -15,6 +16,10 @@ def main():
         data: dict[str, any] = tomllib.load(f)
 
     if data.get('project') is None:
+        if os.path.exists(".env.shared"):
+            data.update(dotenv_values(".env.shared"))
+            data["project"] = {"name": data["PROJECT_NAME"], "version": data["PROJECT_VERSION"]}
+
         data = {'project': {'name': "{PROJECT NAME}", "version": "1.0.0"}}
 
     html = HtmlBuilder() \
