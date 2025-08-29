@@ -17,7 +17,7 @@ class Function:
 
                 type(arg.type).__name__.lower()
                 if not isinstance(arg.type, jast._jast.Coit)
-                else self.arg.type.id + "<>",
+                else arg.type.id + "<>",
 
                 [type(modifier).__name__.lower() for modifier in arg.modifiers]
             ]
