@@ -1,7 +1,7 @@
 """This Module Handles all the AI communication for generating documentation"""
 import requests
-import ast
 import json
+import ast
 
 
 def sendRequest(endpoint: str, model: str, message: str) -> str:
@@ -38,23 +38,18 @@ def sendRequest(endpoint: str, model: str, message: str) -> str:
 def requestModuleDoc(module: str, config: dict[str, str]) -> str:
     """Given a Module/File, it will return the AI generated documentation"""
     message = f"""
-You are a documentation generator.
+You are a core maintainer of this project and know the details on how to operate the app.
+Create documentation for the following file given its Abstract Syntax Tree.
 
-You will be given an abstract syntax tree (AST) dump of a Python module.
+First, identify the purpose of the file and what its trying to achieve.
+Next, provide example usage on how a user can utilize the file.
+Be sure to keep it as accurate to the information given in the tree as possible.
+Finally, provide the output for the example usage.
 
-Rules:
-1. Document **only classes, functions, or methods that already have a docstring** in the AST.
-2. Use the **exact names and argument structures** found in the AST. Never invent or change them.
-3. If no docstring exists for an item, **skip it completely**.
-4. Do not create new functions, classes, methods, or arguments that are not explicitly present.
-5. Do not use markdown, headings, bullet points, or formatting. Output plain text only.
-6. Do not talk about the benefits and limitations of the program.
-7. The documentation should:
-   - Restate and clarify the existing docstring in natural language.
-   - Expand upon it if possible, but never guess functionality that is not mentioned.
-   - Provide a brief usage example only if the docstring clearly indicates how.
+Be sure to keep it nice and simple for a user to understand.
+**Make sure you return pure text. Avoid using formatting such as markdown.**
 
-Here is the AST:
+Here is the ast:
 {module}
 """
 
@@ -62,10 +57,6 @@ Here is the AST:
 
 
 if __name__ == '__main__':
-    from DocumentationGenerator import parser
-    # tree = parser.parseFromFile('src/DocumentationGenerator/html_builder.py')
-    # print(requestModuleDoc(tree, {"AI_HOST": "https://ollama.franceisnotreal.com/", "MODEL": "codegemma:instruct"}))
-
-    with open('src/DocumentationGenerator/html_builder.py', 'r') as f:
-        module: str = f.read()
-    print(requestModuleDoc(module, {"AI_HOST": "https://ollama.franceisnotreal.com/", "MODEL": "codegemma:instruct"}))
+    from DocumentationGenerator.python import parser
+    tree = parser.parseFromFile('src/DocumentationGenerator/java/parser.py')
+    print(requestModuleDoc(ast.dump(tree), {"AI_HOST": "https://ollama.franceisnotreal.com/", "MODEL": "codegemma:instruct"}))
