@@ -10,7 +10,7 @@
     <div class="container mx-4" id="root">
 
 <h4 class='mt-4'>src/DocumentationGenerator/html_builder.py:</h4>
-<p class='mt-4'>Defines the Builder Architecture to Create HTML</p>
+<p class='mt-4'>OVERVIEW<br>This module provides a HtmlBuilder class for creating HTML tags and a collection of helper functions. The HtmlBuilder class allows users to easily build HTML content by chaining methods like createH4, createParagraph, and createLink.<br>USAGE EXAMPLES<br>```python<br>Create an HtmlBuilder object<br>builder = HtmlBuilder(generateInitalHtml=True)<br>Build an H4 tag with some content<br>builder.createH4(contents="My Heading")<br>Build a paragraph tag with some content<br>builder.createParagraph(contents="This is a paragraph.")<br>Build a link tag with a target URL<br>builder.createLink(contents="Click here", link="example.com")<br>Build the HTML content<br>html = builder.build()<br>Print the HTML content<br>print(html)<br>```<br>EXPECTED OUTPUT<br>The code above will output a valid HTML document containing an H4 tag, a paragraph tag, and a link tag. The specific HTML content will depend on the input parameters provided to the createH4, createParagraph, and createLink methods.</p>
 <div class='row my-4 px-5 bg-body-secondary rounded'><div class='my-4'><span class='text-primary'>class</span>
 <span class='text-success'>HtmlBuilder</span>
 <span class=''>: </span>

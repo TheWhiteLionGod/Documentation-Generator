@@ -1,7 +1,9 @@
 from . import parser, datatypes, generator
 from ..html_builder import HtmlBuilder
+from .. import ai_handler
 from pathlib import Path
 from dotenv import dotenv_values
+import strip_markdown
 import ast
 import os
 import tomllib
@@ -53,6 +55,11 @@ def main():
         # Checking if file is "private"
         if file_docstring is None:
             continue
+
+        if config.get("AI_HOST") is not None:
+            file_docstring = ai_handler.requestModuleDoc(ast.dump(tree), "Python", config)
+            file_docstring = strip_markdown.strip_markdown(file_docstring)
+            file_docstring = file_docstring.replace("\n", "<br>")
 
         html = HtmlBuilder() \
             .createH4("mt-4", contents=str(filename) + ":") \

@@ -54,7 +54,7 @@ Rules:
 3) Do not fabricate behavior or example results. Base your output strictly on the AST content (docstrings, literals, returns, print statements, etc.).
 4) USAGE EXAMPLES must use the actual names and expected calling patterns from the AST.
 5) EXPECTED OUTPUT must describe what the example produces (printed text, returned value, etc.), or "Unknown" if not determinable from the AST.
-6) Keep output concise, technical, and plain text (no Markdown, no HTML, no code fences).
+6) Keep output short, technical, and plain text (no Markdown, no HTML, no code fences).
 
 Input:
 Language: {language}  # Either "Python" or "Java"

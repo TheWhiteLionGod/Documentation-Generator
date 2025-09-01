@@ -10,7 +10,7 @@
     <div class="container mx-4" id="root">
 
 <h4 class='mt-4'>src/DocumentationGenerator/java/datatypes.py:</h4>
-<p class='mt-4'>This Module defines the Structures to hold Function and Class Data</p>
+<p class='mt-4'>OVERVIEW:<br>This module defines a class DataProcessor for handling CSV files and a utility function merge_records. DataProcessor provides methods to load, filter, and export data. merge_records combines two lists of dictionaries based on a matching key.<br>USAGE EXAMPLES:<br>```python<br>processor = DataProcessor(file_path="input.csv", delimiter=";")<br>filtered = processor.filter_rows(min_age=18, max_age=30, include_inactive=False)<br>processor.export("filtered_output.csv")<br>merged = merge_records(records_a=[{"id": 1, "name": "Alice"}],<br>                       records_b=[{"id": 1, "score": 95}],<br>                       key="id")<br>```<br>EXPECTED OUTPUT:<br><br>The filter_rows call returns a list of rows matching the specified criteria.<br>The export method writes the filtered data to "filtered_output.csv".<br>The merge_records function returns a merged list based on the id field.<br>The specific values returned by these methods depend on the input data.<br></p>
 <div class='row my-4 px-5 bg-body-secondary rounded'><div class='my-4'><span class='text-primary'>class</span>
 <span class='text-success'>Function</span>
 <span class=''>: </span>

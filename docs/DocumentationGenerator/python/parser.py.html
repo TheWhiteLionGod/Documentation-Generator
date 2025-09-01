@@ -10,7 +10,7 @@
     <div class="container mx-4" id="root">
 
 <h4 class='mt-4'>src/DocumentationGenerator/python/parser.py:</h4>
-<p class='mt-4'>This Module Parses The Python Files</p>
+<p class='mt-4'>OVERVIEW:<br>This module provides functionality for parsing and manipulating data from Python files. It includes functions for parsing functions, classes, and modules from AST trees.<br>USAGE EXAMPLES:<br>```python<br>Parse a single file<br>tree = ast.parse(open('file.py').read())<br>functions = parseFunctionsFromTree(tree)<br>Parse a directory<br>module_data = parseDirectory('directory')<br>Parse a module<br>module_docstring = parseDocstringFromModule(module)<br>```<br>EXPECTED OUTPUT:<br><br>The parseFunctionsFromTree function returns a list of Function objects representing the functions defined in the AST tree.<br>The parseDirectory function returns a dictionary mapping file paths to AST trees.<br>The parseDocstringFromModule function returns the docstring of the AST module.<br></p>
 <div class='row my-4 px-5 bg-body-secondary rounded'></div>
 <div class='row my-4 px-5 bg-body-secondary rounded'><div class='my-4'><span class='text-primary'>def</span>
 <span class='text-warning'>parseFromFile(</span>
