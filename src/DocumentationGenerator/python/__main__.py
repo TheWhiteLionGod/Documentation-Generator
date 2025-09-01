@@ -57,9 +57,10 @@ def main():
             continue
 
         if config.get("AI_HOST") is not None:
-            file_docstring = ai_handler.requestModuleDoc(ast.dump(tree), "Python", config)
-            file_docstring = strip_markdown.strip_markdown(file_docstring)
-            file_docstring = file_docstring.replace("\n", "<br>")
+            response = ai_handler.requestModuleDoc(ast.dump(tree), "Python", config)
+            if "Error | " not in response:
+                file_docstring = strip_markdown.strip_markdown(response)
+                file_docstring = file_docstring.replace("\n", "<br>")
 
         html = HtmlBuilder() \
             .createH4("mt-4", contents=str(filename) + ":") \

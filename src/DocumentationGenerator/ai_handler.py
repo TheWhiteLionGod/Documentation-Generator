@@ -26,13 +26,13 @@ def sendRequest(endpoint: str, model: str, message: str) -> str:
         if result.get('message') and 'content' in result['message']:
             return result['message']['content']
 
-        return f"Unexpected Response Format: {result}"
+        return f"Error | Unexpected Response Format: {result}"
     except requests.exceptions.RequestException as e:
-        return f"Request Failed: {e}"
+        return f"Error | Request Failed: {e}"
     except json.JSONDecodeError as e:
-        return f"Failed to parse json: {e}"
+        return f"Error | Failed to parse json: {e}"
     except Exception as e:
-        return f"Something went wrong: {e}"
+        return f"Error | Something went wrong: {e}"
 
 
 def requestModuleDoc(module: str, language: str, config: dict[str, str]) -> str:
@@ -63,13 +63,23 @@ AST:
 {module}
 <<AST_END>>
 
+Self-check (silent, do not print steps):
+- Ensure USAGE EXAMPLES match actual parameter names and defaults.
+- Ensure EXPECTED OUTPUT is derived from explicit return/print/throw/raise nodes only.
+- Do not rename or invent classes, functions, or fields.
+- Do not include Markdown or HTML formatting.
+- Output only the three requested sections.
+- Do not create headers, just give a paragrah response, similar to only documentation.
+
+
 Example of the desired output format:
-OVERVIEW:
 This module defines a class 'DataProcessor' for handling CSV files and a utility function 'merge_records'.
-- 'DataProcessor' provides methods to load, filter, and export data.
-- 'merge_records' combines two lists of dictionaries based on a matching key.
+
+'DataProcessor' provides methods to load, filter, and export data.
+'merge_records' combines two lists of dictionaries based on a matching key.
 
 USAGE EXAMPLES:
+```python```
 processor = DataProcessor(file_path="input.csv", delimiter=";")
 filtered = processor.filter_rows(min_age=18, max_age=30, include_inactive=False)
 processor.export("filtered_output.csv")
@@ -77,19 +87,7 @@ processor.export("filtered_output.csv")
 merged = merge_records(records_a=[{{"id": 1, "name": "Alice"}}],
                        records_b=[{{"id": 1, "score": 95}}],
                        key="id")
-
-EXPECTED OUTPUT:
-- The 'filter_rows' call returns a list of rows matching the specified criteria.
-- The 'export' method writes the filtered data to "filtered_output.csv".
-- The 'merge_records' function returns a merged list based on the 'id' field.
-- Exact values depend on input data; no hardcoded sample output is visible in the AST.
-
-Self-check (silent, do not print steps):
-- Ensure USAGE EXAMPLES match actual parameter names and defaults.
-- Ensure EXPECTED OUTPUT is derived from explicit return/print/throw/raise nodes only.
-- Do not rename or invent classes, functions, or fields.
-- Do not include Markdown or HTML formatting.
-- Output only the three requested sections.
+```
 
 Now generate the documentation.
 """

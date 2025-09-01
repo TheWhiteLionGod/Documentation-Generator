@@ -1,7 +1,9 @@
 from . import parser, datatypes, generator
 from ..html_builder import HtmlBuilder
+from .. import ai_handler
 from dotenv import dotenv_values
 from pathlib import Path
+import strip_markdown
 import os
 import jast
 
@@ -38,8 +40,17 @@ def main():
         f.write(html.createDiv("my-4", "bg-body-secondary", "rounded", contents=table_of_contents_html).build())
 
     for filename, tree in files.items():
+        file_docstring = HtmlBuilder(False)
+        if config.get("AI_HOST") is not None:
+            response = ai_handler.requestModuleDoc(jast.unparse(tree), "Python", config)
+            if "Error | " not in response:
+                response = strip_markdown.strip_markdown(response)
+                response = response.replace("\n", "<br>")
+                file_docstring = file_docstring.createParagraph(contents=file_docstring).build()
+
         html = HtmlBuilder() \
-            .createH4("mt-4", contents=str(filename) + ":")
+            .createH4("mt-4", contents=str(filename) + ":") \
+            .createParagraph("mt-4", contents=file_docstring)
 
         classes: list[datatypes.Class] = parser.parseClassesFromTree(tree)
         interfaces: list[datatypes.Interface] = parser.parseInterfacesFromTree(tree)
