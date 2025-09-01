@@ -35,28 +35,64 @@ def sendRequest(endpoint: str, model: str, message: str) -> str:
         return f"Something went wrong: {e}"
 
 
-def requestModuleDoc(module: str, config: dict[str, str]) -> str:
+def requestModuleDoc(module: str, language: str, config: dict[str, str]) -> str:
     """Given a Module/File, it will return the AI generated documentation"""
     message = f"""
-You are a core maintainer of this project and know the details on how to operate the app.
-Create documentation for the following file given its Abstract Syntax Tree.
+You are an expert in static code analysis and technical documentation.
 
-First, identify the purpose of the file and what its trying to achieve.
-Next, provide example usage on how a user can utilize the file.
-Be sure to keep it as accurate to the information given in the tree as possible.
-Finally, provide the output for the example usage.
+Your task: produce accurate, plain-text documentation for the following Abstract Syntax Tree (AST).
+The AST may represent either Python 3.x or Java code.
 
-Be sure to keep it nice and simple for a user to understand.
-**Make sure you return pure text. Avoid using formatting such as markdown.**
+Output must include ONLY the following three sections in this exact order and wording:
+OVERVIEW:
+USAGE EXAMPLES:
+EXPECTED OUTPUT:
 
-Here is the ast:
+Rules:
+1) Preserve all symbol names (classes, methods, functions, parameters) exactly as they appear in the AST.
+2) If any information is missing (types, behavior, output), write "Unknown" rather than guessing.
+3) Do not fabricate behavior or example results. Base your output strictly on the AST content (docstrings, literals, returns, print statements, etc.).
+4) USAGE EXAMPLES must use the actual names and expected calling patterns from the AST.
+5) EXPECTED OUTPUT must describe what the example produces (printed text, returned value, etc.), or "Unknown" if not determinable from the AST.
+6) Keep output concise, technical, and plain text (no Markdown, no HTML, no code fences).
+
+Input:
+Language: {language}  # Either "Python" or "Java"
+AST:
+<<AST_START>>
 {module}
+<<AST_END>>
+
+Example of the desired output format:
+OVERVIEW:
+This module defines a class 'DataProcessor' for handling CSV files and a utility function 'merge_records'.
+- 'DataProcessor' provides methods to load, filter, and export data.
+- 'merge_records' combines two lists of dictionaries based on a matching key.
+
+USAGE EXAMPLES:
+processor = DataProcessor(file_path="input.csv", delimiter=";")
+filtered = processor.filter_rows(min_age=18, max_age=30, include_inactive=False)
+processor.export("filtered_output.csv")
+
+merged = merge_records(records_a=[{{"id": 1, "name": "Alice"}}],
+                       records_b=[{{"id": 1, "score": 95}}],
+                       key="id")
+
+EXPECTED OUTPUT:
+- The 'filter_rows' call returns a list of rows matching the specified criteria.
+- The 'export' method writes the filtered data to "filtered_output.csv".
+- The 'merge_records' function returns a merged list based on the 'id' field.
+- Exact values depend on input data; no hardcoded sample output is visible in the AST.
+
+Self-check (silent, do not print steps):
+- Ensure USAGE EXAMPLES match actual parameter names and defaults.
+- Ensure EXPECTED OUTPUT is derived from explicit return/print/throw/raise nodes only.
+- Do not rename or invent classes, functions, or fields.
+- Do not include Markdown or HTML formatting.
+- Output only the three requested sections.
+
+Now generate the documentation.
 """
 
     return sendRequest(config["AI_HOST"], config["MODEL"], message)
 
-
-if __name__ == '__main__':
-    from DocumentationGenerator.python import parser
-    tree = parser.parseFromFile('src/DocumentationGenerator/java/parser.py')
-    print(requestModuleDoc(ast.dump(tree), {"AI_HOST": "https://ollama.franceisnotreal.com/", "MODEL": "codegemma:instruct"}))

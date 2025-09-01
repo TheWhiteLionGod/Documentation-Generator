@@ -12,7 +12,13 @@ def main():
     files: dict[str, jast.Module] = parser.parseDirectory(directory)
 
     # Getting project config from .env.shared
-    config: dict[str, str] = dotenv_values(".env.shared")
+    if os.path.exists(".env.shared"):
+        config: dict[str, str] = dotenv_values(".env.shared")
+    else:
+        config: dict[str, str] = {"PROJECT_NAME": r"{PROJECT_NAME}", r"PROJECT_VERSION": "1.0.0"}
+
+    if os.path.exists(".env.secret"):
+        config.update(dotenv_values(".env.secret"))
 
     html = HtmlBuilder() \
         .createH4("mt-4", contents=config["PROJECT_NAME"])\

@@ -13,18 +13,22 @@ def main():
     files: dict[ast.Module] = parser.parseDirectory(directory)
 
     with open('pyproject.toml', 'rb') as f:
-        data: dict[str, any] = tomllib.load(f)
+        config: dict[str, any] = tomllib.load(f)
 
-    if data.get('project') is None:
+    if config.get('project') is None:
         if os.path.exists(".env.shared"):
-            data.update(dotenv_values(".env.shared"))
-            data["project"] = {"name": data["PROJECT_NAME"], "version": data["PROJECT_VERSION"]}
+            config.update(dotenv_values(".env.shared"))
+        else:
+            config = {"PROJECT_NAME": r"{PROJECT NAME}", "PROJECT_VERSION": "1.0.0"}
+    else:
+        config = {"PROJECT_NAME": config["project"]["name"], "PROJECT_VERSION": config["project"]["version"]}
 
-        data = {'project': {'name': "{PROJECT NAME}", "version": "1.0.0"}}
+    if os.path.exists(".env.secret"):
+        config.update(dotenv_values(".env.secret"))
 
     html = HtmlBuilder() \
-        .createH4("mt-4", contents=data['project']["name"]) \
-        .createParagraph(contents="v" + data["project"]["version"])
+        .createH4("mt-4", contents=config['PROJECT_NAME']) \
+        .createParagraph(contents="v" + config["PROJECT_VERSION"])
 
     table_of_contents_html = HtmlBuilder(False).createH4("px-3", "pt-2", contents="Table of Contents")
     for filename, tree in files.items():
